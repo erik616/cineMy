@@ -2,20 +2,15 @@ import { useEffect, useState } from "react";
 
 import { useNavigation } from "@react-navigation/native";
 
-import { Alert, Keyboard, SafeAreaView, StyleSheet, TouchableWithoutFeedback, View, Text } from "react-native";
+import { Keyboard, SafeAreaView, StyleSheet, TouchableWithoutFeedback, View, Text } from "react-native";
 
-import { Email } from "../../components/email";
+import { Input } from "../../components/Input";
 import { Pass } from "../../components/pass";
 import { Button } from "../../components/button";
 
 import * as Animatable from "react-native-animatable"
 
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { database } from "../../config/firebase";
-
-// import * as WebBrowser from 'expo-web-browser';
-// import * as Google from 'expo-auth-session/providers/google';
-// WebBrowser.maybeCompleteAuthSession();
 
 
 export function Login() {
@@ -71,6 +66,7 @@ export function Login() {
         if (log) {
             setDisable(false)
         }
+
     }, [email, pass])
 
     // console.log(email);
@@ -87,9 +83,9 @@ export function Login() {
             .then((userCredential) => {
                 // Signed in 
                 setMsg('')
-                setPass('')
                 const user = userCredential.user;
                 console.log(user);
+                setPass(undefined)
                 navigation.navigate('Homer', {
                     screen: 'Home',
                     params: {
@@ -171,11 +167,13 @@ export function Login() {
                         Login
                     </Animatable.Text>
 
-                    <Email
+                    <Input
                         placeholder='Email ou numero de telefone'
-                        email={email}
-                        onChangeEmail={(value) => setEmail(value)}
-                        emailMsg={emailMsg}
+                        value={email}
+                        onChange={(value) => setEmail(value)}
+                        msg={emailMsg}
+                        type="email-address"
+                        touch={false}
                     />
 
 

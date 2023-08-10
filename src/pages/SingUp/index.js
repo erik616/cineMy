@@ -3,19 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import {
-    Keyboard,
     SafeAreaView,
     StyleSheet,
-    TouchableWithoutFeedback,
     View,
     Text,
-    KeyboardAvoidingView,
-    Platform,
     ScrollView
 } from "react-native";
 
-import { Name } from "../../components/name";
-import { Email } from "../../components/email";
+import { Input } from "../../components/Input";
 import { Pass } from "../../components/pass";
 import { Button } from "../../components/button";
 
@@ -46,15 +41,15 @@ export function Registrer() {
 
     useEffect(() => {
         function validation(name, email, senha,) {
-
-            if (typeof name === "undefined") SetMsgName('')
-            if (typeof email === "undefined") SetMsgMail('')
-            if (typeof pass === "undefined") SetMsgPass('')
-
-            // setDisable(true)
             let validName = false;
             let validPass = false;
             let validMail = false;
+
+            if (typeof name === "undefined") return SetMsgName('')
+            if (typeof email === "undefined") return SetMsgMail('')
+            if (typeof senha === "undefined") return SetMsgPass('')
+
+            // setDisable(true)
 
             if (!senha) {
                 validPass = false;
@@ -126,67 +121,65 @@ export function Registrer() {
         <SafeAreaView
             style={styles.container}
         >
-            <KeyboardAvoidingView
-                style={styles.container}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={40}
-            >
-                <ScrollView>
-                    <DismissKeyboard>
-                        <Animatable.View
-                            animation="fadeInUp"
-                            style={styles.group}>
-                            <Animatable.Text
-                                delay={300}
-                                animation="fadeInLeft"
-                                style={styles.title}
-                            >
-                                Registre-se
-                            </Animatable.Text>
+            <ScrollView>
+                <DismissKeyboard>
+                    <Animatable.View
+                        animation="fadeInUp"
+                        style={styles.group}>
+                        <Animatable.Text
+                            delay={300}
+                            animation="fadeInLeft"
+                            style={styles.title}
+                        >
+                            Cadastrar
+                        </Animatable.Text>
 
-                            <Name
-                                placeholder="Nome"
-                                name={name}
-                                onChangeName={(value) => setName(value)}
-                                nameMsg={nameMsg}
+                        <Input
+                            placeholder="Nome"
+                            value={name}
+                            onChange={(value) => setName(value)}
+                            msg={nameMsg}
+                            type="name"
+                            touch={false}
+                        />
+
+                        <Input
+                            placeholder='Email'
+                            value={email}
+                            onChange={(value) => setEmail(value)}
+                            msg={emailMsg}
+                            type="email-address"
+                            touch={false}
+                        />
+
+                        <Pass
+                            placeholder='Senha'
+                            value={pass}
+                            onChangePass={(value) => setPass(value)}
+                            securet={eye}
+                            press={() => setEye(!eye)}
+                            passMsg={passMsg}
+                        />
+
+                        <View style={{ gap: 12, marginTop: 24 }}>
+                            <Button
+                                text="Enviar"
+                                disabled={disabled}
+                                onpress={() => register()}
                             />
 
-                            <Email
-                                placeholder='Email'
-                                email={email}
-                                onChangeEmail={(value) => setEmail(value)}
-                                emailMsg={emailMsg}
-                            />
+                            {msg && <Text style={{
+                                fontSize: 16,
+                                color: "#e87c03",
+                                fontWeight: 500,
+                                alignSelf: "center"
+                            }}>{msg}</Text>}
 
-                            <Pass
-                                placeholder='Senha'
-                                value={pass}
-                                onChangePass={(value) => setPass(value)}
-                                securet={eye}
-                                press={() => setEye(!eye)}
-                                passMsg={passMsg}
-                            />
+                        </View>
 
-                            <View style={{ gap: 12, marginTop: 24 }}>
-                                <Button
-                                    text="Registrar"
-                                    disabled={disabled}
-                                    onpress={() => register()}
-                                />
-
-                                {msg && <Text style={{
-                                    fontSize: 16,
-                                    color: "#e87c03",
-                                    fontWeight: 500,
-                                    alignSelf: "center"
-                                }}>{msg}</Text>}
-
-                            </View>
-
-                        </Animatable.View>
-                    </DismissKeyboard>
-                </ScrollView>
-            </KeyboardAvoidingView >
+                    </Animatable.View>
+                </DismissKeyboard>
+            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -212,9 +205,3 @@ const styles = StyleSheet.create({
     },
 });
 
-
-const DismissKeyboard = ({ children }) => (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {children}
-    </TouchableWithoutFeedback>
-)

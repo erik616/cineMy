@@ -2,11 +2,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import { Login } from "../pages/SignIn"
 import { Registrer } from "../pages/SingUp"
-// import { Home } from "../pages/Home"
-// import { Search } from "../pages/Search"
-// import { Favorites } from "../pages/Favorites"
-
 import { Routes } from "."
+import { Details } from "../pages/Details"
 
 const Stack = createNativeStackNavigator()
 
@@ -30,10 +27,16 @@ export function StackRoutes() {
                     headerShown: false
                 }}
             />
-            
+
             <Stack.Screen
                 name="Homer"
                 component={Routes}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="Details"
+                component={Details}
                 options={{ headerShown: false }}
             />
 

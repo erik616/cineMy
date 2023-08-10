@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
 import { Home } from "../pages/Home"
 import { Search } from "../pages/Search"
-import { Favorites } from "../pages/Profile"
+import { Profile } from "../pages/Profile"
 
 import { Ionicons } from "@expo/vector-icons"
 import { BlurView } from "expo-blur"
@@ -21,10 +21,10 @@ export function Routes() {
                 tabBarShowLabel: false,
                 tabBarActiveTintColor: "#333333",
 
-                
+
                 tabBarStyle: {
                     position: "absolute",
-                    borderTopWidth:0,
+                    borderTopWidth: 0,
                     backgroundColor: "#333333",
                     bottom: 10,
                     borderRadius: 50,
@@ -69,8 +69,8 @@ export function Routes() {
             />
 
             <Tab.Screen
-                name="Favorites"
-                component={Favorites}
+                name="Profile"
+                component={Profile}
                 options={{
                     tabBarIcon: ({ color, size, focused }) => {
                         if (focused) {

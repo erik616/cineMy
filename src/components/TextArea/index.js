@@ -1,20 +1,19 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
-export function Fone({ number, numberMsg, placeholder, onChangeNumber }) {
+export function TextAaea({ value, placeholder, onChange }) {
     return (
         <View>
             <TextInput
-                style={[
-                    styles.input, {
-                        borderBottomWidth: numberMsg ? 4 : 0,
-                        borderColor: numberMsg ? "#e87c03" : null
-                    }]}
+                editable
+                multiline
+                numberOfLines={8}
+                style={styles.input}
                 placeholderTextColor="#8c8c8c"
                 placeholder={placeholder}
-                value={number}
-                onChangeText={onChangeNumber}
+                value={value}
+                onChangeText={onChange}
+                textAlignVertical="top"
             />
-            {numberMsg && <Text style={styles.erroMsg}>{numberMsg}</Text>}
         </View>)
 }
 
@@ -23,8 +22,7 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: 8,
         backgroundColor: "#333333",
-        height: 60,
-        paddingLeft: 18,
+        padding: 18,
         color: "#8c8c8c",
         fontSize: 18,
     },
@@ -32,5 +30,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#e87c03",
         fontWeight: 500
-    }
+    },
 })

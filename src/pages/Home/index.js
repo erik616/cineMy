@@ -1,6 +1,7 @@
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState, useRef } from "react";
 
+import { useNavigation } from "@react-navigation/native";
 
 import {
     StyleSheet,
@@ -42,6 +43,7 @@ export function Home() {
     const [carrMovies, setCarrMovies] = useState([])
     const [background, setBackground] = useState(carrMovies[0]?.poster_path)
 
+    const navigation = useNavigation()
 
     // RECUPERA USUARIO
     useEffect(() => {
@@ -81,17 +83,27 @@ export function Home() {
     // LISTA DE FILMES PARA O CAROSEL
     useEffect(() => {
         const carrUrl = `${API_LIST}${createIdList()}?page=1&api_key=${API_KEY}`
-        console.log("Num List",createIdList());
+        console.log("Num List", createIdList());
         getCarrMovies(carrUrl)
     }, [])
 
+
+    function details(id) {
+        navigation.setParams()
+        navigation.navigate('Details', {
+            params: {
+                paramKey: id
+            }
+        })
+    }
 
     // COMPONENTE DO CAROUSEL
     const _renderItem = ({ item }) => {
         return (
             <View style={{ position: "absolute", bottom: 48, }}>
-                <TouchableOpacity 
-                    style={{alignItems:"center"}}
+                <TouchableOpacity
+                    style={{ alignItems: "center" }}
+                    onPress={() => details(item.id)}
                 >
                     <Image
                         source={{ uri: `${API_IMG}${item.poster_path}` }}
@@ -144,12 +156,12 @@ export function Home() {
                     showsVerticalScrollIndicator={false}
                     data={topMovies}
                     keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => <Card data={item} />}
+                    renderItem={({ item }) => <Card data={item} type="normal" />}
                     horizontal={true}
                 />
             </View>
 
-            <View style={{height:70}}></View>
+            <View style={{ height: 70 }}></View>
         </ScrollView>
     )
 }
