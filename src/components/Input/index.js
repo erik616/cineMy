@@ -3,32 +3,37 @@ import { Ionicons } from "@expo/vector-icons"
 
 export function Input({ value, msg, placeholder, onChange, type, touch, press }) {
     return (
-        <View style={styles.container}>
-            <TextInput
-                style={[
-                    styles.input, {
-                        borderBottomWidth: msg ? 4 : 0,
-                        borderColor: msg ? "#e87c03" : null
-                    }, {
-                        width: touch ? "85%" : "100%",
-                    }
-                ]}
-                placeholderTextColor="#8c8c8c"
-                placeholder={placeholder}
-                value={value}
-                onChangeText={onChange}
-                keyboardType={type}
-            />
-            {type === "web-search" &&
-                <TouchableOpacity
-                    style={styles.icon}
-                    onPress={press}
-                >
-                    <Ionicons name="search" color="#333" size={40} />
-                </TouchableOpacity>
-            }
-            {msg && <Text style={styles.erroMsg}>{msg}</Text>}
-        </View>)
+        <View>
+            <View style={styles.container}>
+                <TextInput
+                    style={[
+                        styles.input, {
+                            borderBottomWidth: msg ? 4 : 0,
+                            borderColor: msg ? "#e87c03" : null,
+                        }, {
+                            width: touch ? "85%" : "100%",
+                        }
+                    ]}
+                    placeholderTextColor="#8c8c8c"
+                    placeholder={placeholder}
+                    value={value}
+                    onChangeText={onChange}
+                    keyboardType={type}
+                />
+                {type === "web-search" &&
+                    <TouchableOpacity
+                        style={styles.icon}
+                        onPress={press}
+                    >
+                        <Ionicons name="search" color="#333" size={40} />
+                    </TouchableOpacity>
+                }
+            </View>
+            <View>
+                {msg && <Text style={styles.erroMsg}>{msg}</Text>}
+            </View>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -43,6 +48,7 @@ const styles = StyleSheet.create({
         paddingLeft: 18,
         color: "#8c8c8c",
         fontSize: 18,
+        borderRadius: 8
     },
     icon: {
         width: "15%",

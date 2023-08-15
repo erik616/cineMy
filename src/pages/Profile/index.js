@@ -8,7 +8,8 @@ import {
     TouchableHighlight,
     FlatList,
     Text,
-    Image
+    Image,
+    TouchableOpacity
 } from "react-native";
 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
@@ -23,41 +24,11 @@ export function Profile() {
 
     const navigation = useNavigation()
 
-    useEffect(() => {
-        const profile = navigation.addListener("focus", () => {
-            console.log("Profile");
-            auth()
+    function showMovies() {
+        navigation.navigate("Movies", {
+            screen: 'Movies'
         })
-        function auth() {
-            const auth = getAuth();
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    // User is signed in, see docs for a list of available properties
-                    // https://firebase.google.com/docs/reference/js/auth.user
-                    getAnalysisMovies(user.uid)
-                }
-            });
-        }
-
-        async function getAnalysisMovies(user) {
-            const q = query(collectionAnalysis, where('user', '==', user))
-
-            const array = []
-            const querySnapshot = await getDocs(q)
-            querySnapshot.forEach((doc) => {
-                if (doc.data()) {
-                    array.push(doc.data())
-                }
-            })
-
-            setUser(user)
-            setMovies(array)
-        }
-
-        return profile
-    }, [])
-
-
+    }
 
     function logout() {
         const auth = getAuth();
@@ -69,46 +40,29 @@ export function Profile() {
         });
     }
 
-    console.log("Movies", movies);
-
-
-    function _card({ data }) {
-        console.log("Filme", data.url);
+    function _renderButton() {
         return (
-            <View
+            <TouchableOpacity
+                onPress={showMovies}
                 style={styles.card}
             >
-                <Image
-                    style={styles.img}
-                    source={{ uri: `${data.url}` }}
-                />
-                <View style={styles.details}>
-                    <Text style={styles.title}>Title: {data.name}</Text>
-                    <Text style={styles.info}>{data.analysis}</Text>
-                </View>
-            </View>
+                <MaterialCommunityIcons name="movie-open-check" color="#8c8c8c" size={45}></MaterialCommunityIcons>
+                <Text style={{
+                    fontSize: 30,
+                    color: "#fff",
+                    fontWeight: "800"
+                }}>
+                    Movies
+                </Text>
+            </TouchableOpacity>
         )
-    }
-    function _renderList() {
-        if (movies.length > 0) {
-            return (
-                <FlatList
-                    data={movies}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item) => String(item.id)}
-                    renderItem={(item) => <_card data={item.item} type="details" />}
-                />
-            )
-        } else {
-            return <Text style={{ fontSize: 16, color: "#8c8c8c" }}>Não há filmes</Text>
-        }
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Filmes comentados</Text>
+            <Text style={styles.title}>Perfil</Text>
 
-            <_renderList />
+            <_renderButton />
 
             <TouchableHighlight
                 style={styles.logout}
@@ -128,7 +82,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
     },
     title: {
-        color: "#000",
+        color: "#ffff",
         fontSize: 24,
         fontWeight: "bold",
         marginBottom: 12
@@ -146,28 +100,17 @@ const styles = StyleSheet.create({
     },
     card: {
         width: "100%",
-        height: 200,
+        height: 80,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
         flexDirection: "row",
-        borderRadius: 8,
+        borderRadius: 50,
         overflow: "hidden",
-        marginBottom: 12
-    },
-    img: {
-        height: "100%",
-        width: "40%",
-        resizeMode: "cover",
-        backgroundColor: "#fff"
-    },
-    details: {
-        width: "60%",
-        height: "100%",
-        // backgroundColor: "#8c8c8c",
-        padding: 8,
-        backgroundColor: "#fff",
-    },
-    info: {
-        color: "#000",
-        fontSize: 16,
-        fontWeight: "500",
+        marginTop: 50,
+        marginBottom: 12,
+        backgroundColor: "#1C2026",
+        alignItems: "center",
+        gap: 10
+        // backgroundColor: "#8c8c8c"
     },
 });

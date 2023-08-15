@@ -4,6 +4,7 @@ import { Login } from "../pages/SignIn"
 import { Registrer } from "../pages/SingUp"
 import { Routes } from "."
 import { Details } from "../pages/Details"
+import { Movies } from "../pages/Movies"
 
 const Stack = createNativeStackNavigator()
 
@@ -31,13 +32,34 @@ export function StackRoutes() {
             <Stack.Screen
                 name="Homer"
                 component={Routes}
-                options={{ headerShown: false }}
+                options={{
+                    headerShown: false,
+
+                }}
             />
 
             <Stack.Screen
                 name="Details"
                 component={Details}
-                options={{ headerShown: false }}
+                options={{
+                    headerTransparent: true,
+                    headerBlurEffect:  "light" ,
+                    headerTintColor: "#fff",
+                    title: '',
+                }}
+            />
+
+            <Stack.Screen
+                name="Movies"
+                component={Movies}
+                options={{
+                    headerStyle: {
+                        backgroundColor: "#000",
+                    },
+                    headerTintColor: "#fff",
+                    title: 'Filmes',
+                }}
+
             />
 
 

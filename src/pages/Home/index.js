@@ -28,7 +28,7 @@ const screenWidth = Dimensions.get('window').width
 
 
 function createIdList() {
-    const id_list = Math.round(Math.random() * (20 - 1) + 1);
+    const id_list = Math.round(Math.random() * (50 - 1) + 1);
     return id_list
 }
 
@@ -83,7 +83,7 @@ export function Home() {
     // LISTA DE FILMES PARA O CAROSEL
     useEffect(() => {
         const carrUrl = `${API_LIST}${createIdList()}?page=1&api_key=${API_KEY}`
-        console.log("Num List", createIdList());
+        console.log("Num List", createIdList(), carrUrl);
         getCarrMovies(carrUrl)
     }, [])
 
@@ -156,7 +156,7 @@ export function Home() {
                     showsVerticalScrollIndicator={false}
                     data={topMovies}
                     keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => <Card data={item} type="normal" />}
+                    renderItem={({ item }) => <Card data={item} type="normal" home={true}/>}
                     horizontal={true}
                 />
             </View>

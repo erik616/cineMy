@@ -122,7 +122,7 @@ export function Registrer() {
             style={styles.container}
         >
             <ScrollView>
-                <DismissKeyboard>
+               
                     <Animatable.View
                         animation="fadeInUp"
                         style={styles.group}>
@@ -178,7 +178,7 @@ export function Registrer() {
                         </View>
 
                     </Animatable.View>
-                </DismissKeyboard>
+              
             </ScrollView>
         </SafeAreaView>
     )

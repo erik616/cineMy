@@ -23,10 +23,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.erikd.cinemy"
+      "package": "com.erikd.cinemy",
+      "versionCode": 1
     },
-    "package": "com.erikd.cinemy",
-    "versionCode": 1,
     "extra": {
       "eas": {
         "projectId": "b48e7ee4-ea66-4caa-9357-72eabb346238"

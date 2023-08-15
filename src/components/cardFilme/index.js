@@ -1,14 +1,35 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { API_IMG } from "../../utils/API";
 
-export function Card({ data, details }) {
+import { useNavigation } from "@react-navigation/native";
+
+export function Card({ data, details, home }) {
     const banner = data.backdrop_path ? data.backdrop_path : data.poster_path
     const imgLink = `${API_IMG}${banner}`
-    
+
     const poster = `${API_IMG}${data.poster_path}`
-  
+
+    const navigation = useNavigation()
+
+    function callFunction(id) {
+        if (!home) return
+        goMovie(id)
+    }
+
+    function goMovie(id) {
+        navigation.navigate('Details', {
+            params: {
+                paramKey: id
+            }
+        })
+    }
+
     return (
-        <View style={[details === true ? styles.details : styles.container]}>
+        <TouchableOpacity
+            style={[details === true ? styles.details : styles.container]}
+            activeOpacity={1}
+            onPress={() => callFunction(data.id)}
+        >
             <Image
                 style={[styles.img,
                 details === true
@@ -21,8 +42,8 @@ export function Card({ data, details }) {
                         : `${poster}`
                 }}
             />
-            <Text style={{color: "#000"}}>{data.title}</Text>
-        </View>
+            <Text style={{ color: "#000" }}>{data.title}</Text>
+        </TouchableOpacity>
     )
 }
 

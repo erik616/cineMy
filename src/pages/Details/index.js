@@ -5,7 +5,7 @@ import {
     SafeAreaView,
     StyleSheet,
     Text,
-    ScrollView, 
+    ScrollView,
     View
 } from "react-native";
 
@@ -14,7 +14,7 @@ import { API, IMG, API_KEY } from "../../utils/API";
 import { TextAaea } from "../../components/TextArea";
 import { Card } from "../../components/cardFilme";
 import { Button } from "../../components/button";
-import { getDocs, addDoc, query, where  } from "firebase/firestore";
+import { getDocs, addDoc, query, where } from "firebase/firestore";
 import { collectionAnalysis } from "../../config/firebase";
 
 export function Details() {
@@ -110,11 +110,9 @@ export function Details() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
-                <Text style={styles.title}>{movie.original_title}</Text>
-
-                <View style={{ marginVertical: 12 }}>
+                <View style={{ marginBottom: 12,marginTop: 24}}>
                     <Card data={movie} details={true} />
+                    <Text style={styles.title}>{movie.original_title}</Text>
                 </View>
 
                 <View style={{ paddingHorizontal: 16, gap: 14 }}>
@@ -131,7 +129,6 @@ export function Details() {
                         onpress={create}
                     />
                 </View>
-            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -140,12 +137,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#000',
-        paddingTop: 40,
     },
     title: {
-        paddingHorizontal: 32,
+        position: "absolute",
+        paddingHorizontal: 16,
         color: "#fff",
         fontSize: 24,
         fontWeight: "bold",
+        bottom: 0
     },
 });
