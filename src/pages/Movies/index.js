@@ -74,7 +74,7 @@ export function Movies() {
                     source={{ uri: `${data.url}` }}
                 />
                 <View style={styles.details}>
-                    <Text style={styles.titleMovie}>Title: {data.name}</Text>
+                    <Text style={styles.titleMovie}>Titulo: {data.name}</Text>
                     <Text style={styles.info}>{data.analysis}</Text>
                 </View>
             </View>

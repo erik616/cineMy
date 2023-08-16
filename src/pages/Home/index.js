@@ -26,10 +26,9 @@ const screenHeigth = Dimensions.get('window').height * 0.70
 const screenWidth = Dimensions.get('window').width
 
 
-
 function createIdList() {
-    const id_list = Math.round(Math.random() * (50 - 1) + 1);
-    return id_list
+    let id = Math.round(Math.random() * (50 - 1) + 1);
+    return id
 }
 
 
@@ -40,6 +39,8 @@ export function Home() {
 
     const [mail, setMail] = useState('')
     const [topMovies, setTopMovies] = useState([])
+    const [likeMovies, setLikeMovies] = useState([])
+    const [othersMovies, setOthersMovies] = useState([])
     const [carrMovies, setCarrMovies] = useState([])
     const [background, setBackground] = useState(carrMovies[0]?.poster_path)
 
@@ -63,7 +64,7 @@ export function Home() {
 
         setTopMovies(data.results);
     }
-
+    // LIST TOP MOVIES
     useEffect(() => {
         const topRateUrl = `${API}top_rated?api_key=${API_KEY}`
 
@@ -75,16 +76,32 @@ export function Home() {
     const getCarrMovies = async (url) => {
         const res = await fetch(url)
         const data = await res.json()
-
         setCarrMovies(data.results)
     }
+    //LIKE FILMES
+    const getLikeMovies = async (url) => {
+        const res = await fetch(url)
+        const data = await res.json()
 
+        setLikeMovies(data.results)
+    }
+    //OTHERS FILMES
+    const getOtherMovies = async (url) => {
+        const res = await fetch(url)
+        const data = await res.json()
+
+        setOthersMovies(data.results)
+    }
 
     // LISTA DE FILMES PARA O CAROSEL
     useEffect(() => {
         const carrUrl = `${API_LIST}${createIdList()}?page=1&api_key=${API_KEY}`
-        console.log("Num List", createIdList(), carrUrl);
+        // const likeUrl = `${API_LIST}${createIdList()}?page=1&api_key=${API_KEY}`
+        // const otherUrl = `${API_LIST}${createIdList()}?page=1&api_key=${API_KEY}`
+        // console.log("Num List", createIdList(), carrUrl);
         getCarrMovies(carrUrl)
+        // getLikeMovies(likeUrl)
+        // getOtherMovies(otherUrl)
     }, [])
 
 
@@ -151,12 +168,11 @@ export function Home() {
 
             <View style={styles.movies}>
                 <Text style={styles.title}>Em alta</Text>
-                {/* {topMovies && topMovies.map((movie) => <Text style={styles.title}>{movie.title}</Text>)} */}
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={topMovies}
                     keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => <Card data={item} type="normal" home={true}/>}
+                    renderItem={({ item }) => <Card data={item} type="normal" home={true} />}
                     horizontal={true}
                 />
             </View>
@@ -212,6 +228,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     movies: {
+        marginBottom: 8
     }
 });
 

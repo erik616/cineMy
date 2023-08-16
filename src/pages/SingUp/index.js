@@ -17,14 +17,6 @@ import { Button } from "../../components/button";
 import * as Animatable from "react-native-animatable"
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-// import { firestore } from "../../config/firebase";
-
-
-// import * as WebBrowser from 'expo-web-browser';
-// import * as Google from 'expo-auth-session/providers/google';
-// WebBrowser.maybeCompleteAuthSession();
-
-// const db = firestore.
 
 export function Registrer() {
     const navigation = useNavigation()
